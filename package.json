@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.2",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-async-handler": "^1.1.4",
@@ -17,6 +18,7 @@
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.0",
+    "mongoose-paginate": "^5.0.3",
     "require-dir": "^1.2.0",
     "youch": "^2.0.10"
   },

@@ -11,5 +11,10 @@ class UserController {
     const userRes = await UserModel.create(req.body)
     return res.json(userRes)
   }
+
+  async getAllUsers (req, res) {
+    const userRes = await UserModel.find()
+    return res.json(userRes)
+  }
 }
 module.exports = new UserController()
