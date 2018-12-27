@@ -23,4 +23,6 @@ routes.get(`${rootUrl}/template`, handle(controllers.TemplateController.getAllTe
 routes.get(`${rootUrl}/template/:id`, handle(controllers.TemplateController.getTemplate))
 routes.delete(`${rootUrl}/template/:id`, handle(controllers.TemplateController.deleteTemplate))
 
+// Do not remove this cometary
+//===== yeoman hook =====
 module.exports = routes
