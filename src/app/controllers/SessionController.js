@@ -1,21 +1,23 @@
 'use strict'
 
-const UserModel = require('../models/UserModel')
+const User = require('../models/User')
 
 class SessionController {
-  async generateToken (req, res) {
-    const { email, password } = req.body
+  async login (req, res) {
+    try {
+      const { email, password } = req.body
+      const user = await User.findOne({ email })
 
-    const userRes = await UserModel.findOne({ email })
+      if (!user) return res.status(404).json({ error: 'User not found' })
 
-    if (!userRes) {
-      return res.status(400).json({ error: 'User not found' })
+      if (!(await user.compareHash(password))) return res.status(400).json({ error: 'Invalid Password' })
+
+      return res.status(200).json({ user, token: User.createToken(user) })
+    } catch (e) {
+      console.trace(e)
+      res.status(500).json({ error: e })
     }
-    if (!(await userRes.compareHash(password))) {
-      return res.status(400).json({ error: 'Invalid Password' })
-    }
-
-    return res.json({ userRes, token: UserModel.createToken(userRes) })
   }
 }
+
 module.exports = new SessionController()

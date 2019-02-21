@@ -5,6 +5,7 @@ require('dotenv').config()
 const express = require('express')
 const validate = require('express-validation')
 const mongoose = require('mongoose')
+const logger = require('morgan')
 const Youch = require('youch')
 
 class App {
@@ -22,9 +23,12 @@ class App {
       useCreateIndex: true,
       useNewUrlParser: true
     })
+    mongoose.set('debug', true)
   }
 
   middleware () {
+    this.express.use(logger('dev'))
+    this.express.disable('x-powered-by')
     this.express.use(express.json())
   }
 

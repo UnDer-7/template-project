@@ -1,6 +1,6 @@
 'use strict'
 
-const User = require('../models/UserModel')
+const User = require('../models/User')
 
 class UserController {
   async createUser (req, res) {

@@ -13,7 +13,7 @@ const authMiddleware = require('./app/middlewares/auth')
 const rootUrl = '/api'
 
 routes.post(`${rootUrl}/user`, validate(validators.UserValidator), handle(controllers.UserController.createUser))
-routes.post(`${rootUrl}/login`, validate(validators.UserValidator), handle(controllers.SessionController.generateToken))
+routes.post(`${rootUrl}/login`, validate(validators.UserValidator), handle(controllers.SessionController.login))
 
 routes.use(authMiddleware)
 
@@ -27,4 +27,5 @@ routes.delete(`${rootUrl}/user/:id`, handle(controllers.UserController.deleteUse
 
 // Do not remove this cometary
 // ===== lazy-backend hook =====
+
 module.exports = routes
