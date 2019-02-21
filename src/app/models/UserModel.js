@@ -2,15 +2,21 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const authConfig = require('../../config/authConfig')
+const paginate = require('mongoose-paginate')
 
 const UserSchema = new mongoose.Schema({
-  login: {
+  email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    trim: true,
+    minlength: [5, 'Minimum 5 characters']
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    minlength: [5, 'Minimum 5 characters']
   },
   createdAt: {
     type: Date,
@@ -39,4 +45,6 @@ UserSchema.statics = {
     })
   }
 }
+
+UserSchema.plugin(paginate)
 module.exports = mongoose.model('User', UserSchema)

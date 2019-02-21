@@ -2,9 +2,9 @@ const UserModel = require('../models/UserModel')
 
 class SessionController {
   async generateToken (req, res) {
-    const { login, password } = req.body
+    const { email, password } = req.body
 
-    const userRes = await UserModel.findOne({ login })
+    const userRes = await UserModel.findOne({ email })
 
     if (!userRes) {
       return res.status(400).json({ error: 'User not found' })
