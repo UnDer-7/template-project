@@ -1,12 +1,13 @@
-const UserModel = require('../models/UserModel')
+'use strict'
+
+const User = require('../models/UserModel')
 
 class UserController {
   async createUser (req, res) {
     try {
-      const { email } = req.body
-      if (await UserModel.findOne({ email })) return res.status(400).json({ error: 'User already exists' })
-      const userRes = await UserModel.create(req.body)
-      return res.status(201).json(userRes)
+      if (await User.findOne({ where: req.body.email })) return res.status(400).json({ error: 'User already exists' })
+      const user = await User.create(req.body)
+      return res.status(201).json(user)
     } catch (e) {
       console.trace(e)
       return res.status('500').json({ error: e })
@@ -16,7 +17,7 @@ class UserController {
   async updateUser (req, res) {
     try {
       const { email, password } = req.body
-      const user = await UserModel.findById(req.params.id)
+      const user = await User.findById(req.params.id)
       if (!user) return res.status(400).json({ error: 'User not found' })
 
       user.email = email
@@ -31,7 +32,7 @@ class UserController {
 
   async getAllUser (req, res) {
     try {
-      const user = await UserModel.paginate({}, {
+      const user = await User.paginate({}, {
         page: req.query.page || 1,
         limit: req.query.page || 25,
         sort: req.query.sort || '-createdAt'
@@ -45,7 +46,7 @@ class UserController {
 
   async getUser (req, res) {
     try {
-      const user = await UserModel.findById(req.params.id)
+      const user = await User.findById(req.params.id)
       if (!user) return res.status(404).json({ error: 'User not found' })
       return res.json(user)
     } catch (e) {
@@ -56,7 +57,7 @@ class UserController {
 
   async deleteUser (req, res) {
     try {
-      const user = await UserModel.findByIdAndDelete(req.params.id)
+      const user = await User.findByIdAndDelete(req.params.id)
       if (!user) return res.status(404).json({ error: 'User not found' })
       return res.status(200).json(true)
     } catch (e) {

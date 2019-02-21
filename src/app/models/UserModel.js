@@ -1,7 +1,8 @@
+'use strict'
+
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const authConfig = require('../../config/authConfig')
 const paginate = require('mongoose-paginate')
 
 const UserSchema = new mongoose.Schema({
@@ -40,9 +41,7 @@ UserSchema.methods = {
 
 UserSchema.statics = {
   createToken ({ id }) {
-    return jwt.sign({ id }, authConfig.secret, {
-      expiresIn: authConfig.ttl
-    })
+    return jwt.sign({ data: id }, process.env.APP_SECRET, { expiresIn: '1h' })
   }
 }
 

@@ -1,11 +1,11 @@
+'use strict'
+
 require('dotenv').config()
 
 const express = require('express')
 const validate = require('express-validation')
 const mongoose = require('mongoose')
 const Youch = require('youch')
-
-const databaseConfig = require('./config/databaseConfig')
 
 class App {
   constructor () {
@@ -18,7 +18,7 @@ class App {
   }
 
   database () {
-    mongoose.connect(databaseConfig.uri, {
+    mongoose.connect(process.env.DB_URL, {
       useCreateIndex: true,
       useNewUrlParser: true
     })
